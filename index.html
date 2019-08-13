@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/normalize/8.0.1/normalize.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.font.im/css?family=Lato" rel="stylesheet">
+    <title>Photo Album</title>
+    <style type="text/css">
+    html{
+        font-family: 'Lato', sans-serif;/*谷歌字体，http://www.googlefonts.net/?category=Serif,Sans+Serif,Display,Monospace&query=lato&selection.family=Lato*/
+        line-height: 1.5;
+        font-size: 15px;
+    }
+
+    *{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;/*小技巧*/
+    }
+
+    *, *::after, *::before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;/*小技巧*/
+    }
+
+    body{
+        margin: 0;
+    }
+
+    /* ------------nav------------ */
+    .nav{
+        text-align: right;
+    }
+    .button-bar{
+        border: none;
+        background-color: #fff;
+        padding: 5px 10px;
+        font-size: 26px;
+        display: inline-block;
+        text-align: center;
+        outline: none;/*去掉点击时的外边线*/
+        cursor: pointer;/*鼠标移上去时有一个小手*/
+    }
+    .button-bar:hover{
+        background-color: #ddd;
+    }
+    /* --------------nav model ------------*/
+    .nav-model{
+        background-color: #000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: none;
+    }
+    .button-close{
+        border: none;
+        background-color: #000;
+        color:#fff;
+        padding: 5px 10px;
+        font-size: 26px;
+        display: inline-block;
+        text-align: center;
+        outline: none;/*去掉点击时的外边线*/
+        cursor: pointer;/*鼠标移上去时有一个小手*/
+        float: right;
+        overflow: hidden;
+    }
+    .button-close:hover{
+        background-color: #ddd;
+        color: #000;
+    }
+    .nav-model ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top:30%;
+        left: 50%;
+        transform: translate(-50%,0);/*调整二维的*/
+    }
+    .nav-model li:hover a{
+        color: #fff;
+    }
+    .nav-model li a{
+        display: block;
+        color: #999;
+        text-decoration: none;
+        font-size: 26px;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .animation-top{
+        -webkit-animation: animationtop 0.4s;
+        -o-animation: animationtop 0.4s;
+        animation: animationtop 0.4s;
+    }
+    @-webkit-keyframes animationtop {
+        from{
+            top:-300px;
+            opacity: 0;
+        }
+        to{
+            top:0;
+            opacity: 1;
+        }
+     }
+    @keyframes animationtop {
+        from{
+            top:-300px;
+            opacity: 0;
+        }
+        to{
+            top:0;
+            opacity: 1;
+        }
+    }
+
+    /* ---------------header-------------- */
+    .header{
+        padding: 34px 0;
+        text-align: center;
+        opacity: 0.7;
+    }
+
+    .header h1{
+        letter-spacing: 5px;/*h1字体间距拉大*/
+    }
+
+    /*.header p{*/
+    /*    letter-spacing: 2px;!*p字体间距拉大*!*/
+    /*}*/
+
+    .button{
+        border: none;
+        padding: 8px 16px;
+        background-color: #111;
+        color: #eee;
+        font-size: 15px;
+        display: inline-block;
+        margin-top: 16px;
+        cursor:pointer;
+        outline: none;
+    }
+
+    /* -----------------photo grid style------------- */
+    /*.container{*/
+    /*    overflow: hidden;*/
+    /*}*/
+    /*清除浮动*/
+    .container::after{ /*伪元素选择器*/
+        /*overflow: hidden;*/
+        content: " ";
+        clear: both;
+        display: table;
+    }
+
+    .column{
+        float: left;
+        width: 33.333%;
+    }
+    img{
+        width: 100%;
+        height: auto;
+        margin-bottom: -5px;
+    }
+    .space{
+        padding: 0 8px;
+    }
+    .space img{
+        margin-bottom: 8px;
+    }
+    .space .column{
+        padding: 0 8px;
+    }
+    /* ------------------footer----------- */
+    .footer{
+        background-color: #f1f1f1;
+        padding: 64px 0;
+        text-align: center;
+        opacity: 0.7;
+        margin-top: 64px;
+    }
+    .iconbar{
+        font-size: 18px;
+        cursor:pointer;
+    }
+    .iconbar i{
+        padding: 2px;
+        cursor:pointer;
+    }
+    .iconbar i:hover{
+        opacity: 0.7;
+    }
+    
+    .footer a{
+        color: #000;
+    }
+
+    /*-------------------responsive style----------------*/
+    @media only screen and (max-width: 600px){
+        .column{
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!--    nav-->
+    <nav class="nav">
+        <button id="barBtn" class="button-bar"><i class="fa fa-bars" ></i></button>
+    </nav>
+    <div id="navModel" class="nav-model animation-top">
+        <button id="closeBtn" class="button-close"><i class="fa fa-times"></i></button>
+        <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Photo</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    <!-----------header----------->
+    <header class="header">
+        <h1>PHOTOLIO</h1>
+        <P>A template made by Levick for photographer.</P>
+        <button id="toogleBtn" class="button">Toogle Grid padding</button>
+    </header>
+
+    <!------------photo grid---------->
+    <main id="main" class="container">
+        <div class="column">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224101.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-02-26/20190226163029VBHLC.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809223846.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2014_Website_appreciate/2015-01-28/20150128010212.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224601.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224351.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2013_Website_appreciate/2013-06-14/20130614172728.jpg" width="100%" alt="photo">
+        </div>
+        <div class="column">
+            <img src="http://ppe.oss-cn-shenzhen.aliyuncs.com/collections/158/8/thumb.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224309.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-02-26/201902261633219inuQ.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224018.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809223846.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-13/20190813110938HCUYp.jpg" width="100%" alt="photo">
+            <img src="http://ppe.oss-cn-shenzhen.aliyuncs.com/palette/9272/1541463710548/thumb_Mon_Nov_05_2018.jpg" width="100%" alt="photo">
+            <img src="http://ppe.oss-cn-shenzhen.aliyuncs.com/collections/157/10/thumb.jpg" width="100%" alt="photo">
+        </div>
+        <div class="column">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809125855.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809225001.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224101.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224843.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-02-26/201902261632388OTE58OTE5.jpg" width="100%" alt="photo">
+            <img src="https://abc.2008php.com/2019_Website_appreciate/2019-08-09/20190809224309.jpg" width="100%" alt="photo">
+        </div>
+    </main>
+
+    <!-----------footer---------------->
+    <footer class="footer">
+            <p class="iconbar">
+                <i class="fa fa-wechat"></i>
+                <i class="fa fa-weibo"></i>
+                <i class="fa fa-github"></i>
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-qq"></i>
+            </p>
+        <p>Powered by <a href="https://mola.sc2yun.com">Levick</a></p>
+    </footer>
+    <script type="text/javascript">
+        //--nav model control--//
+        var bar = document.getElementById("barBtn");
+        var nav = document.getElementById("navModel");
+        var close = document.getElementById("closeBtn");
+        bar.onclick = function () {
+            nav.style.display = "block";
+        }
+        close.onclick = function () {
+            nav.style.display = "none";
+        }
+
+        // --photo space control--//
+        var toogleBtn = document.getElementById("toogleBtn");
+        var main = document.getElementById("main");
+        toogleBtn.onclick = function () {
+            if (main.className.indexOf("space")>-1) {
+                main.className = main.className.replace("space","");
+            } else{
+                main.className = main.className + " space";
+            }
+        }
+    </script>
+</body>
+</html>
